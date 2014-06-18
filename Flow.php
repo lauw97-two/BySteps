@@ -1,6 +1,6 @@
 <?php
 
-namespace Lo\Component\Flow;
+namespace Lo\Component\BySteps;
 
 class Flow {
 
