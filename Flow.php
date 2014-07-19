@@ -2,14 +2,18 @@
 
 namespace Lo\Component\BySteps;
 
+use Lo\Component\BySteps\StepInterface;
+
 class Flow {
 
     private $name;
     private $identifier;
     private $steps;
+    private $strictIdentifier;
 
     function __construct() {
         $this->steps = array();
+        $this->strictIdentifier = true;
     }
 
     public function getName() {
@@ -28,27 +32,19 @@ class Flow {
         $this->identifier = $identifier;
     }
 
-    public function getSteps() {
-        return $this->steps;
-    }
-
-    public function setSteps($steps) {
-        $this->steps = $steps;
-    }
-
-    public function addStep($step) {
+    public function addStep(StepInterface $step) {
         $this->steps[] = $step;
     }
 
-    public function getStep($identifier, $strict = false) {
+    public function getStep($identifier) {
 
-        if (!$strict && preg_match("/^(s(tep|)\d+|\d+)$/", $identifier)) {
+        if (!$this->strictIdentifier && preg_match("/^(s(tep|)\d+|\d+)$/", $identifier)) {
             return $this->getStepByPosition($position = preg_replace("/[^\d+]/", "", $identifier));
-        }
-
-        foreach ($this->steps as $step) {
-            if ($step->getIdentifier() == $identifier) {
-                return $step;
+        } else {
+            foreach ($this->steps as $step) {
+                if ($step->getIdentifier() == $identifier) {
+                    return $step;
+                }
             }
         }
 

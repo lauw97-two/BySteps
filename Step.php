@@ -2,14 +2,16 @@
 
 namespace Lo\Component\BySteps;
 
-class Step {
+abstract class Step implements StepInterface {
 
     const STATUS_COMPLETE = 1;
 
     private $name;
-    private $identifier;
     private $status;
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName() {
         return $this->name;
     }
@@ -18,12 +20,11 @@ class Step {
         $this->name = $name;
     }
 
-    public function getIdentifier() {
-        return $this->identifier;
-    }
-
-    public function setIdentifier($identifier) {
-        $this->identifier = $identifier;
+    /**
+     * {@inheritdoc}
+     */
+    public function execute() {
+        ;
     }
 
     public function getStatus() {
@@ -35,7 +36,7 @@ class Step {
     }
 
     public function isComplete() {
-        return $this->getStatus() == self::STATUS_COMPLETE;
+        return $this->getStatus() === self::STATUS_COMPLETE;
     }
 
 }
