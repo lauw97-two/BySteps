@@ -1,19 +1,19 @@
 <?php
 
-namespace Lo\Component\BySteps;
+namespace Lo\Component\ByStep;
 
-use Lo\Component\BySteps\StepInterface;
+use Lo\Component\ByStep\StepInterface;
 
-class Flow {
+abstract class Flow {
 
     private $name;
     private $identifier;
     private $steps;
     private $strictIdentifier;
 
-    function __construct() {
+    function __construct($strictIdentifier = true) {
+        $this->strictIdentifier = $strictIdentifier;
         $this->steps = array();
-        $this->strictIdentifier = true;
     }
 
     public function getName() {
@@ -52,9 +52,8 @@ class Flow {
     }
 
     public function getStepByPosition($position) {
-        if (empty($this->steps)) {
-            throw new \Exception("No step found in the flow");
-        } else if (isset($this->steps[$key = $position - 1])) {
+
+        if (isset($this->steps[$key = $position - 1])) {
             return $this->steps[$key];
         }
 
@@ -103,5 +102,3 @@ class Flow {
     }
 
 }
-
-?>

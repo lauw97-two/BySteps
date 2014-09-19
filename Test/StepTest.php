@@ -2,7 +2,7 @@
 
 namespace Lo\Component\BySteps\Tests;
 
-use Lo\Component\BySteps\Step;
+use Lo\Component\ByStep\Step;
 
 /**
  * Description of StepTest
@@ -11,16 +11,44 @@ use Lo\Component\BySteps\Step;
  */
 class StepTest extends \PHPUnit_Framework_TestCase {
 
-    public function testClassConstant(){
+    public function testClassConstant() {
         $this->assertTrue(Step::STATUS_COMPLETE === 1);
     }
-    
+
     public function testIsComplete() {
-        $step = $this->getMockForAbstractClass('Lo\Component\BySteps\Step');
+
+        $step = $this->getMockForAbstractClass('Lo\Component\ByStep\Step');
         $this->assertFalse($step->isComplete());
-        
-        $step->setStatus(Step::STATUS_COMPLETE);
+
+        $reflectionStep = new \ReflectionClass('Lo\Component\ByStep\Step');
+        $property = $reflectionStep->getProperty('status');
+        $property->setAccessible(true);
+
+        $property->setValue($step, Step::STATUS_COMPLETE);
         $this->assertTrue($step->isComplete());
+
+        $property->setValue($step, Step::STATUS_UNCOMPLETE);
+        $this->assertFalse($step->isComplete());
+    }
+
+    public function testGetStatus() {
+        $step = $this->getMockForAbstractClass('Lo\Component\ByStep\Step');
+        
+        $reflectionStep = new \ReflectionClass('Lo\Component\ByStep\Step');
+        $property = $reflectionStep->getProperty('status');
+        $property->setAccessible(true);
+
+        $this->assertSame($property->getValue($step), Step::STATUS_UNCOMPLETE);
+
+        $property->setValue($step, Step::STATUS_COMPLETE);
+        $this->assertSame($property->getValue($step), Step::STATUS_COMPLETE);
+
+        $property->setValue($step, Step::STATUS_UNCOMPLETE);
+        $this->assertSame($property->getValue($step), Step::STATUS_UNCOMPLETE);
+
+        $property->setValue($step, 5);
+        $this->assertNotSame($property->getValue($step), Step::STATUS_COMPLETE);
+        $this->assertNotSame($property->getValue($step), Step::STATUS_UNCOMPLETE);
     }
 
 }

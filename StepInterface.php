@@ -1,6 +1,6 @@
 <?php
 
-namespace Lo\Component\BySteps;
+namespace Lo\Component\ByStep;
 
 /**
  *
@@ -15,7 +15,9 @@ interface StepInterface {
      */
     public function getIdentifier();
 
+    /**
+     * Write down all the logic to execute
+     * in this step
+     */
     public function execute();
 }
-
-?>

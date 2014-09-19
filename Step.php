@@ -1,13 +1,18 @@
 <?php
 
-namespace Lo\Component\BySteps;
+namespace Lo\Component\ByStep;
 
 abstract class Step implements StepInterface {
 
     const STATUS_COMPLETE = 1;
+    const STATUS_UNCOMPLETE = 0;
 
     private $name;
     private $status;
+
+    function __construct() {
+        $this->status = self::STATUS_UNCOMPLETE;
+    }
 
     /**
      * {@inheritdoc}
@@ -23,16 +28,10 @@ abstract class Step implements StepInterface {
     /**
      * {@inheritdoc}
      */
-    public function execute() {
-        ;
-    }
+    abstract public function execute();
 
     public function getStatus() {
         return $this->status;
-    }
-
-    public function setStatus($status) {
-        $this->status = $status;
     }
 
     public function isComplete() {
@@ -40,5 +39,3 @@ abstract class Step implements StepInterface {
     }
 
 }
-
-?>
