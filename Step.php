@@ -21,6 +21,9 @@ abstract class Step implements StepInterface {
         return $this->name;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setName($name) {
         $this->name = $name;
     }
@@ -29,6 +32,8 @@ abstract class Step implements StepInterface {
      * {@inheritdoc}
      */
     abstract public function execute();
+
+    abstract public function getIdentifier();
 
     public function getStatus() {
         return $this->status;

@@ -11,8 +11,9 @@ use Lo\Component\ByStep\Step;
  */
 class StepTest extends \PHPUnit_Framework_TestCase {
 
-    public function testClassConstant() {
-        $this->assertTrue(Step::STATUS_COMPLETE === 1);
+    public function testClassStatusConstant() {
+        $this->assertNotEquals(Step::STATUS_COMPLETE, Step::STATUS_UNCOMPLETE);
+        $this->assertNotSame(Step::STATUS_COMPLETE, Step::STATUS_UNCOMPLETE);
     }
 
     public function testIsComplete() {
@@ -33,22 +34,22 @@ class StepTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetStatus() {
         $step = $this->getMockForAbstractClass('Lo\Component\ByStep\Step');
-        
+
         $reflectionStep = new \ReflectionClass('Lo\Component\ByStep\Step');
         $property = $reflectionStep->getProperty('status');
         $property->setAccessible(true);
 
-        $this->assertSame($property->getValue($step), Step::STATUS_UNCOMPLETE);
+        $this->assertSame($property->getValue($step), Step:: STATUS_UNCOMPLETE);
 
-        $property->setValue($step, Step::STATUS_COMPLETE);
-        $this->assertSame($property->getValue($step), Step::STATUS_COMPLETE);
+        $property->setValue($step, Step:: STATUS_COMPLETE);
+        $this->assertSame($property->getValue($step), Step:: STATUS_COMPLETE);
 
-        $property->setValue($step, Step::STATUS_UNCOMPLETE);
-        $this->assertSame($property->getValue($step), Step::STATUS_UNCOMPLETE);
+        $property->setValue($step, Step:: STATUS_UNCOMPLETE);
+        $this->assertSame($property->getValue($step), Step:: STATUS_UNCOMPLETE);
 
         $property->setValue($step, 5);
-        $this->assertNotSame($property->getValue($step), Step::STATUS_COMPLETE);
-        $this->assertNotSame($property->getValue($step), Step::STATUS_UNCOMPLETE);
+        $this->assertNotSame($property->getValue($step), Step:: STATUS_COMPLETE);
+        $this->assertNotSame($property->getValue($step), Step:: STATUS_UNCOMPLETE);
     }
 
 }
