@@ -33,6 +33,9 @@ abstract class Step implements StepInterface {
      */
     abstract public function execute();
 
+    /**
+     * {@inheritdoc}
+     */
     abstract public function getIdentifier();
 
     public function getStatus() {
